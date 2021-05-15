@@ -26,7 +26,7 @@ class SignController extends AbstractController
         NeoLog::info('login', $logined);
 
         if ($logined['errcode']) {
-            return $this->success($logined, $logined['errmsg'], $logined['errcode']);
+            return $this->success($logined['errmsg'], $logined['errcode'], $logined);
         }
 
         $user = UserService::getUserByCond(['openid' => $logined['openid']]);
@@ -51,8 +51,8 @@ class SignController extends AbstractController
                 ->getUserToken('neo', $user->userid, $user->username);
 
             return $this->success(
-                ['token' => $token, 'username' => $user['username']],
-                '欢迎来到' . getOption('websitename')
+                '欢迎来到' . getOption('websitename'),
+                ['token' => $token, 'username' => $user['username']]
             );
         }
 
@@ -68,7 +68,7 @@ class SignController extends AbstractController
     {
         $logined = $this->getWeappLoginSession($this->request->input('code', ''));
 
-        return $this->success(['openid' => $logined['openid']]);
+        return $this->success('', ['openid' => $logined['openid']]);
     }
 
     /**
@@ -85,7 +85,7 @@ class SignController extends AbstractController
             'renew' => (bool) $token,
         ];
 
-        return $this->success($data, '成功登录');
+        return $this->success('成功登录', $data);
     }
 
     /**

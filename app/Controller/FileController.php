@@ -43,7 +43,7 @@ class FileController extends AbstractController
 
         $files = $this->fileService->getFiles($memberid);
 
-        return $this->success(['files' => $files ?: new \stdClass()]);
+        return $this->success('', ['files' => $files ?: new \stdClass()]);
     }
 
     /**
@@ -59,12 +59,12 @@ class FileController extends AbstractController
         $this->memberService->checkMember($memberid);
 
         if (! $new_files) {
-            return $this->success([], '没有文件');
+            return $this->success('没有文件');
         }
 
         $this->fileService->update($memberid, $new_files, $deleted_files, $desc);
 
-        return $this->success([], '成功上传文件');
+        return $this->success('成功上传文件');
     }
 
     /**
@@ -80,7 +80,7 @@ class FileController extends AbstractController
         $updated = $this->fileService->updateDescription($fileid, $desc);
 
         if ($updated) {
-            return $this->success([], '成功编辑备注');
+            return $this->success('成功编辑备注');
         }
 
         throw new BusinessException('编辑文件备注错误，请重试');
@@ -97,6 +97,6 @@ class FileController extends AbstractController
     {
         FileService::deleteFile((int) $fileid);
 
-        return $this->success([], '成功删除文件');
+        return $this->success('成功删除文件');
     }
 }

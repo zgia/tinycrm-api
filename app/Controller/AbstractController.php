@@ -30,15 +30,15 @@ abstract class AbstractController
     protected $response;
 
     /**
-     * 成功
+     * 输出
      *
-     * @param array  $data
      * @param string $msg
      * @param int    $code
+     * @param array  $data
      *
      * @return PsrResponseInterface
      */
-    public function success(array $data = [], string $msg = '', int $code = I_SUCCESS)
+    public function resp(string $msg = '', int $code = I_SUCCESS, array $data = [])
     {
         $arr = ['code' => $code];
 
@@ -52,7 +52,20 @@ abstract class AbstractController
     }
 
     /**
-     * 失败.
+     * 成功
+     *
+     * @param string $msg
+     * @param array  $data
+     *
+     * @return PsrResponseInterface
+     */
+    public function success(string $msg = '', array $data = [])
+    {
+        return $this->resp($msg, I_SUCCESS, $data);
+    }
+
+    /**
+     * 失败
      *
      * @param string $msg
      * @param int    $code
@@ -61,6 +74,6 @@ abstract class AbstractController
      */
     public function fail(string $msg = '', int $code = I_FAILURE)
     {
-        return $this->success([], $msg, $code);
+        return $this->resp($msg, $code, []);
     }
 }

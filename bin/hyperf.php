@@ -17,12 +17,22 @@ require BASE_PATH . '/vendor/autoload.php';
 // 一些业务常量
 require BASE_PATH . '/app/Constants/Srv.php';
 
+// zGia! 读源码
+// 入口
 // Self-called anonymous function that creates its own scope and keep the global namespace clean.
 (function () {
     Hyperf\Di\ClassLoader::init();
     /** @var \Psr\Container\ContainerInterface $container */
     $container = require BASE_PATH . '/config/container.php';
 
+    // $container: Hyperf\Di\Container
+    // get的是: Hyperf\Framework\ApplicationFactory
+    // 返回一个Symfony\Component\Console\Application实例
+    // ApplicationFactory 41行
+
+    /**
+     * @var \Symfony\Component\Console\Application $application
+     */
     $application = $container->get(\Hyperf\Contract\ApplicationInterface::class);
     $application->run();
 })();

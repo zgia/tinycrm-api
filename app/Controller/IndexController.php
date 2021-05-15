@@ -22,7 +22,7 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        $userid = $this->request->input('userid', currentUserId());
+        $userid = 1;//$this->request->input('userid', currentUserId());
         $method = $this->request->getMethod();
 
         $user = UserService::getUser($userid);
@@ -30,11 +30,11 @@ class IndexController extends AbstractController
         $data = [
             'method' => $method,
             'user' => $user,
-            'userid' => currentUserId(),
+            'userid' => 0,
             'page' => currentPage(),
         ];
 
-        return $this->success($data);
+        return $this->success('', $data);
     }
 
     /**
@@ -52,7 +52,7 @@ class IndexController extends AbstractController
             'actived' => $user['actived'],
         ];
 
-        return $this->success($data);
+        return $this->success('',$data);
     }
 
     /**
@@ -71,7 +71,7 @@ class IndexController extends AbstractController
             ],
         ];
 
-        return $this->success($data, '世界真奇妙。');
+        return $this->success('世界真奇妙。', $data);
     }
 
     /**
@@ -137,7 +137,7 @@ class IndexController extends AbstractController
             $todayTotal = 0;
         }
 
-        return $this->success(compact(
+        return $this->success('', compact(
             'memberCount',
             'interviewCount',
             'today',
@@ -169,6 +169,6 @@ class IndexController extends AbstractController
             $year[] = ['month' => $i, 'total' => (int) $yb[$i]];
         }
 
-        return $this->success(compact('year'));
+        return $this->success('', compact('year'));
     }
 }

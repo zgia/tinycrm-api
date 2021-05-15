@@ -45,7 +45,7 @@ class InterviewController extends AbstractController
 
         $items = $this->interviewService->getInterviws($memberid);
 
-        return $this->success(['interviews' => array_values($items)]);
+        return $this->success('', ['interviews' => array_values($items)]);
     }
 
     /**
@@ -66,7 +66,7 @@ class InterviewController extends AbstractController
         $interviewid = $this->interviewService->update($data, $new_files, $deleted_files);
 
         if ($interviewid) {
-            return $this->success(['interviewid' => $interviewid], '成功保存访谈');
+            return $this->success('', ['interviewid' => $interviewid], '成功保存访谈');
         }
 
         throw new BusinessException('保存访谈错误，请重试。');

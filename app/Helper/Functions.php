@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Helper\NeoDebug;
 use Hyperf\Di\Container;
 use Hyperf\Di\Definition\DefinitionSourceFactory;
 use Hyperf\Utils\ApplicationContext;
@@ -260,19 +261,18 @@ function debug(...$args)
         return;
     }
 
-    $calledFrom = getDebugBacktrace();
-    unset($calledFrom[0]);
+    array_unshift($args, 'print');
 
-    $errors = '[' . microtime(true) . ']';
-    foreach ($args as $arg) {
-        $errors .= print_r($arg, true) . PHP_EOL;
+    NeoDebug::dump(...$args);
+}
+
+function dump(...$args)
+{
+    if (empty($args)) {
+        return;
     }
 
-    $lines = [];
-    foreach ($calledFrom as $from) {
-        $from['file'] = str_replace(BASE_PATH, '', $from['file']);
-        $lines[] = "Func:{$from['function']} File:{$from['file']} Line:{$from['line']}";
-    }
+    array_unshift($args, 'dump');
 
-    echo $errors, PHP_EOL, '---------------', PHP_EOL, implode(PHP_EOL, $lines), PHP_EOL, '---------------', PHP_EOL, PHP_EOL;
+    NeoDebug::dump(...$args);
 }

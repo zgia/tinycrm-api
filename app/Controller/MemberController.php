@@ -40,7 +40,7 @@ class MemberController extends AbstractController
     {
         $data = MemberService::statusData();
 
-        return $this->success($data);
+        return $this->success('', $data);
     }
 
     /**
@@ -54,7 +54,7 @@ class MemberController extends AbstractController
 
         $members = $this->memberService->getMembers($req);
 
-        return $this->success($members);
+        return $this->success('', $members);
     }
 
     /**
@@ -87,7 +87,7 @@ class MemberController extends AbstractController
             $member['birthday'] = '';
         }
 
-        return $this->success(['member' => $member]);
+        return $this->success('', ['member' => $member]);
     }
 
     /**
@@ -107,7 +107,7 @@ class MemberController extends AbstractController
         $memberid = $this->memberService->update($old, $member);
 
         if ($memberid) {
-            return $this->success(['memberid' => $memberid], '成功保存客户');
+            return $this->success('', ['memberid' => $memberid], '成功保存客户');
         }
 
         throw new BusinessException('保存客户错误，请重试。');
@@ -129,7 +129,7 @@ class MemberController extends AbstractController
 
         $this->memberService->delete($memberid);
 
-        return $this->success([], '删除客户成功');
+        return $this->success('删除客户成功');
     }
 
     /**
@@ -148,7 +148,7 @@ class MemberController extends AbstractController
         // 家庭
         $families = $this->familyService->getFamilies($memberid);
 
-        return $this->success(['families' => $families]);
+        return $this->success('', ['families' => $families]);
     }
 
     /**
@@ -165,7 +165,7 @@ class MemberController extends AbstractController
         $familyid = $this->familyService->update($family);
 
         if ($familyid) {
-            return $this->success(['familyid' => $familyid], '成功保存亲属');
+            return $this->success('', ['familyid' => $familyid], '成功保存亲属');
         }
 
         return $this->fail('亲属保存失败');

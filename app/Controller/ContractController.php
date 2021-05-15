@@ -44,7 +44,7 @@ class ContractController extends AbstractController
 
         $items = $this->contractService->getContracts($memberid);
 
-        return $this->success(['contracts' => $items]);
+        return $this->success('', ['contracts' => $items]);
     }
 
     /**
@@ -63,7 +63,7 @@ class ContractController extends AbstractController
 
         $contract = $this->contractService->checkContract($contractid);
 
-        return $this->success(['contract' => $contract ? $contract->toArray() : []]);
+        return $this->success('', ['contract' => $contract ? $contract->toArray() : []]);
     }
 
     /**
@@ -80,7 +80,7 @@ class ContractController extends AbstractController
         $contractid = $this->contractService->update($data);
 
         if ($contractid) {
-            return $this->success(['contractid' => $contractid], '签约记录保存成功');
+            return $this->success('签约记录保存成功', ['contractid' => $contractid]);
         }
 
         throw new BusinessException('签约记录保存错误，请重试。');

@@ -35,14 +35,18 @@ class AuthMiddleware implements MiddlewareInterface
 
     public function __construct(ContainerInterface $container, HttpResponse $response, HttpRequest $request)
     {
+        // zGia! 读源码
+        dump('*******************************', $response);
         $this->container = $container;
+        /* @var \Hyperf\HttpServer\Response */
         $this->response = $response;
         $this->request = $request;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // print_r(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        // zGia! 读源码
+        dump('*******************************', $this->response);
 
         $validToken = null;
         $this->container->set('current_token_expired', 0);
@@ -50,6 +54,8 @@ class AuthMiddleware implements MiddlewareInterface
         if ($this->request->getPathInfo() === '/sign/auth') {
             $validToken = true;
         }
+
+        $validToken = true;
 
         if (! $validToken) {
             try {
@@ -87,7 +93,10 @@ class AuthMiddleware implements MiddlewareInterface
         }
 
         if ($validToken) {
-            return $handler->handle($request);
+            debug($request);
+            $res = $handler->handle($request);
+            debug($res);
+            return $res;
         }
 
         return $this->response->json(

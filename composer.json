@@ -34,7 +34,8 @@
         "hyperf/async-queue": "~2.0.0",
         "hyperf/amqp": "~2.0.0",
         "hyperf/model-cache": "~2.0.0",
-        "firebase/php-jwt": "^5.2"
+        "firebase/php-jwt": "^5.2",
+        "nesbot/carbon": "^2.38"
     },
     "require-dev": {
         "swoft/swoole-ide-helper": "^4.4",
